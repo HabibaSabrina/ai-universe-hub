@@ -1,8 +1,8 @@
-const loadData = async () =>{
+const loadData = async (id) =>{
     const url = `https://openapi.programming-hero.com/api/ai/tools`;
     const res = await fetch(url);
     const data = await res.json();
-    displayData(data.data.tools)
+    displayData(data.data.tools, id)
     // console.log(data.data.tools[0])
     // console.log(data.data.tools[0].name)
     // console.log(data.data.tools[0].image)
@@ -11,8 +11,17 @@ const loadData = async () =>{
 
 
 }
-const displayData = (data) =>{
+const displayData = (data, dataLimit) =>{
     const aiHubContainer = document.getElementById('aiHub-container')
+    aiHubContainer.innerText =''
+    const seeMore = document.getElementById('btn-see-more')
+    if(dataLimit && data.length>6){
+        data = data.slice(0,6);
+        seeMore.classList.remove('hidden')
+    }
+    else{
+        seeMore.classList.add('hidden')
+    }
     data.forEach(aiHub => {
         const aiHubDiv = document.createElement('div')
         const features = aiHub.features
@@ -51,4 +60,8 @@ const displayData = (data) =>{
     });
 
 }
+loadData(1)
+document.getElementById('btn-see-more').addEventListener('click',function(){
 loadData()
+
+})
