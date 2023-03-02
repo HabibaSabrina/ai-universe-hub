@@ -8,24 +8,30 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-          theme: {
-            extend: {
-              colors: {
-                orange: '#EB5757', 
-              }
+            theme: {
+                extend: {
+                    colors: {
+                        orange: '#EB5757',
+                    }
+                }
             }
-          }
-          
         }
-        
-
-      </script>
+    </script>
 </head>
+
 <body>
     <header class="text-center">
         <h1 class="font-bold text-2xl mt-8">AI Universe Hub</h1>
         <button class="bg-orange px-5 py-3 rounded font-semibold text-white my-5">Sort By Date</button>
     </header>
-    
+    <main>
+        <section>
+            <div id="aiHub-container" class="md:grid md:grid-cols-3 md:gap-5 mx-5 md:mx-10 mt-10">
+
+            </div>
+        </section>
+    </main>
+    <script src="js/ai.js"></script>
 </body>
+
 </html>
