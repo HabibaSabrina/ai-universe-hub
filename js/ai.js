@@ -112,6 +112,23 @@ const displayAIHubDetail = (hubDetails) => {
         <p class="text-gray-500">No Feature found</p>`;
 
     }
+    const hubIntegrations = hubDetails.integrations;
+    console.log(hubIntegrations)
+    const listOfHubIntegrations = document.getElementById('hub-integration-list')
+
+    if(hubIntegrations){
+        listOfHubIntegrations.innerHTML=`
+        <p class="text-2xl font-bold">Integrations</p>
+        <ul class="list-disc text-gray-500 list-inside leading-7">
+        ${hubIntegrations.reduce((updated, latest) => updated.concat(`<li>${latest} </li>`), '')}
+        </ul>`;
+    }
+    else{
+        listOfHubIntegrations.innerHTML=`
+        <p class="text-2xl font-bold">Integrations</p>
+        <p class="text-gray-500">No data found</p>`;
+
+    }
     
     
 
