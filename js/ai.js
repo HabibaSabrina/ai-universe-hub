@@ -61,10 +61,12 @@ const displayData = (data, dataLimit) => {
 
 }
 const loadAIHubDetails = async (hubId) => {
+    console.log(hubId)
     const url = `https://openapi.programming-hero.com/api/ai/tool/${hubId}`
     const res = await fetch(url)
     const data = await res.json();
-    // console.log(data.data.description)
+    console.log(data.data.description)
+    // console.log(data.data.pricing)
     // console.log(data.data.pricing[0].plan)
     // console.log(data.data.pricing[0].price)
     // console.log(data.data.features['1'].feature_name)
@@ -82,14 +84,20 @@ const displayAIHubDetail = (hubDetails) => {
     const priceContainer = document.getElementById('price-container')
     priceContainer.innerHTML=`
     <div class="text-green-500 text-xl font-bold rounded-xl bg-white p-3 py-5">
-        <p>$10/month Basic</p>
+        <p>${hubDetails.pricing ? hubDetails.pricing[0].price : 'No Cost'}</p>
+        <p>${hubDetails.pricing ? hubDetails.pricing[0].plan : 'Free'}</p>
+        
     </div>
     <div class="text-orange-500 text-xl font-bold rounded-xl bg-white p-3 py-5 max-sm:my-5">
-       <p>$50/month Pro</p>
+    <p>${hubDetails.pricing ? hubDetails.pricing[1].price : 'No Cost'}</p>
+    <p>${hubDetails.pricing ? hubDetails.pricing[1].plan : 'Free'}</p>
     </div>
     <div class="text-rose-500 text-xl font-bold rounded-xl bg-white p-3 py-5">
-       <p>Contact us Enterprise</p>
+    <p>${hubDetails.pricing ? hubDetails.pricing[2].price : 'No Contact'}</p>
+    <p>${hubDetails.pricing ? hubDetails.pricing[2].plan : 'Free'}</p>
     </div>`;
+    const hubFeatures = hubDetails.features;
+    console.log(hubFeatures)
 
 
 }
