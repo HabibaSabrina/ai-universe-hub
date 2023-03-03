@@ -1,4 +1,4 @@
-const loadData = async (id) =>{
+const loadData = async (id) => {
     const url = `https://openapi.programming-hero.com/api/ai/tools`;
     const res = await fetch(url);
     const data = await res.json();
@@ -7,25 +7,25 @@ const loadData = async (id) =>{
     // console.log(data.data.tools[0].description)
     // console.log(data.data.tools[0].pricing)
     // console.log(data.data.tools[0].pricing[0].price)
-    
+
 
 
 }
-const displayData = (data, dataLimit) =>{
+const displayData = (data, dataLimit) => {
     const aiHubContainer = document.getElementById('aiHub-container')
-    aiHubContainer.innerText =''
+    aiHubContainer.innerText = ''
     const seeMore = document.getElementById('btn-see-more')
-    if(dataLimit && data.length>6){
-        data = data.slice(0,6);
+    if (dataLimit && data.length > 6) {
+        data = data.slice(0, 6);
         seeMore.classList.remove('hidden')
     }
-    else{
+    else {
         seeMore.classList.add('hidden')
     }
     data.forEach(aiHub => {
         const aiHubDiv = document.createElement('div')
         const features = aiHub.features
-        aiHubDiv.innerHTML=`
+        aiHubDiv.innerHTML = `
         <div class=" p-5 rounded border-2 rounded-xl max-sm:mb-5">
         <img class="rounded-xl w-full h-48" src="${aiHub.image}" alt="">
         <p class="text-xl font-semibold my-3">Features:</p>
@@ -47,37 +47,41 @@ const displayData = (data, dataLimit) =>{
     
             </div>
             </div>
-            <button onclick="loadAIHubDetails('${aiHub.id}')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9 h-9 bg-rose-50 p-2 rounded-full text-red-500">
+            <button onclick="loadAIHubDetails('${aiHub.id}')" data-te-toggle="modal" data-te-target="#hubModal"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9 h-9 bg-rose-50 p-2 rounded-full text-red-500">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
           </svg></button>
               
         </div>
     </div>`
-   
-    aiHubContainer.appendChild(aiHubDiv)
-    
-        
+
+        aiHubContainer.appendChild(aiHubDiv)
+
+
     });
 
 }
-const loadAIHubDetails = async (hubId) =>{
+const loadAIHubDetails = async (hubId) => {
     const url = `https://openapi.programming-hero.com/api/ai/tool/${hubId}`
     const res = await fetch(url)
     const data = await res.json();
-    console.log(data.data.description)
-    console.log(data.data.pricing[0].plan)
-    console.log(data.data.pricing[0].price)
-    console.log(data.data.features['1'].feature_name)
-    console.log(data.data.integrations[0])
-    console.log(data.data.image_link[0])
-    console.log(data.data.input_output_examples[0].input)
-    console.log(data.data.input_output_examples[0].output)
-    console.log(data.data.accuracy.score)
-  
-    // displayPhoneDetail(data.data)
+    // console.log(data.data.description)
+    // console.log(data.data.pricing[0].plan)
+    // console.log(data.data.pricing[0].price)
+    // console.log(data.data.features['1'].feature_name)
+    // console.log(data.data.integrations[0])
+    // console.log(data.data.image_link[0])
+    // console.log(data.data.input_output_examples[0].input)
+    // console.log(data.data.input_output_examples[0].output)
+    // console.log(data.data.accuracy.score)
+    displayAIHubDetail(data.data)
+}
+const displayAIHubDetail = (hubDetails) => {
+    // modal
+
+
 }
 loadData(6)
-document.getElementById('btn-see-more').addEventListener('click',function(){
-loadData()
+document.getElementById('btn-see-more').addEventListener('click', function () {
+    loadData()
 
 })
