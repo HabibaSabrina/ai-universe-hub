@@ -97,7 +97,23 @@ const displayAIHubDetail = (hubDetails) => {
     <p>${hubDetails.pricing ? hubDetails.pricing[2].plan : 'Free'}</p>
     </div>`;
     const hubFeatures = hubDetails.features;
-    console.log(hubFeatures)
+    const listOfHubFeatures = document.getElementById('hub-feature-list')
+    if(hubFeatures){
+        const hubFeaturesKeys = Object.keys(hubFeatures)
+        listOfHubFeatures.innerHTML=`
+        <p class="text-2xl font-bold">Features</p>
+        <ul class="list-disc text-gray-500 list-inside leading-7">
+        ${hubFeaturesKeys.reduce((updated, latest) => updated.concat(`<li>${hubFeatures[latest].feature_name} </li>`), '')}
+        </ul>`;
+    }
+    else{
+        listOfHubFeatures.innerHTML=`
+        <p class="text-2xl font-bold">Features</p>
+        <p class="text-gray-500">No Feature found</p>`;
+
+    }
+    
+    
 
 
 }
