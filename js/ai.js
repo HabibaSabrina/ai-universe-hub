@@ -1,13 +1,9 @@
 const loadData = async (id) => {
+    loadSpinner(true); //start spinner
     const url = `https://openapi.programming-hero.com/api/ai/tools`;
     const res = await fetch(url);
     const data = await res.json();
     displayData(data.data.tools, id);
-    // console.log(data)
-    // console.log(data.data.tools[0].description)
-    // console.log(data.data.tools[0].pricing)
-    // console.log(data.data.tools[0].pricing[0].price)
-
 
 
 }
@@ -58,43 +54,32 @@ const displayData = (data, dataLimit) => {
 
 
     });
+    loadSpinner(false); //spinner stop
 
 }
 const loadAIHubDetails = async (hubId) => {
-    console.log(hubId)
     const url = `https://openapi.programming-hero.com/api/ai/tool/${hubId}`;
     const res = await fetch(url);
     const data = await res.json();
-    // console.log(data.data.description)
-    // console.log(data.data.pricing)
-    // console.log(data.data.pricing[0].plan)
-    // console.log(data.data.pricing[0].price)
-    // console.log(data.data.features['1'].feature_name)
-    // console.log(data.data.integrations[0])
-    // console.log(data.data.image_link[0])
-    // console.log(data.data.input_output_examples[0].input)
-    // console.log(data.data.input_output_examples[0].output)
-    // console.log(data.data.accuracy.score)
     displayAIHubDetail(data.data);
 }
 const displayAIHubDetail = (hubDetails) => {
-    // modal
     const hubDescription = document.getElementById('description');
     hubDescription.innerText = hubDetails.description;
     const priceContainer = document.getElementById('price-container');
     priceContainer.innerHTML=`
     <div class="text-green-500 text-xl font-bold rounded-xl bg-white p-3 py-5">
-        <p>${hubDetails.pricing ? hubDetails.pricing[0].price : 'No Cost'}</p>
-        <p>${hubDetails.pricing ? hubDetails.pricing[0].plan : 'Free'}</p>
+        <p>${hubDetails.pricing ? hubDetails.pricing[0].price : 'Free of Cost/'}</p>
+        <p>${hubDetails.pricing ? hubDetails.pricing[0].plan : 'Basic'}</p>
         
     </div>
     <div class="text-orange-500 text-xl font-bold rounded-xl bg-white p-3 py-5 max-sm:my-5">
-    <p>${hubDetails.pricing ? hubDetails.pricing[1].price : 'No Cost'}</p>
-    <p>${hubDetails.pricing ? hubDetails.pricing[1].plan : 'Free'}</p>
+    <p>${hubDetails.pricing ? hubDetails.pricing[1].price : 'Free of Cost/'}</p>
+    <p>${hubDetails.pricing ? hubDetails.pricing[1].plan : 'Pro'}</p>
     </div>
     <div class="text-rose-500 text-xl font-bold rounded-xl bg-white p-3 py-5">
-    <p>${hubDetails.pricing ? hubDetails.pricing[2].price : 'No Contact'}</p>
-    <p>${hubDetails.pricing ? hubDetails.pricing[2].plan : 'Free'}</p>
+    <p>${hubDetails.pricing  ? hubDetails.pricing[2].price : 'Free of Cost/'}</p>
+    <p>${hubDetails.pricing ? hubDetails.pricing[2].plan : 'Enterprise'}</p>
     </div>`;
     const hubFeatures = hubDetails.features;
     const listOfHubFeatures = document.getElementById('hub-feature-list');
@@ -150,12 +135,21 @@ const displayAIHubDetail = (hubDetails) => {
     else{
         inOutContainer.innerHTML=`
         <p class="font-bold text-2xl my-5 leading-7">Can you give any example?</p>
-        <p class="text-gray-500 mb-8 leading-7">No! Not Yet! Take a break!!!</p>`;
+        <p class="text-gray-500 mb-20 leading-7">No! Not Yet! Take a break!!!</p>`;
     }
-    // console.log(hubDetails.input_output_examples)
-
 
 }
+// spinner function
+const loadSpinner = isLoading => {
+    const spinnerSection = document.getElementById('spinner-loader')
+    if(isLoading){
+        spinnerSection.classList.remove('hidden')
+    }
+    else{
+        spinnerSection.classList.add('hidden')
+    }
+}
+
 loadData(6)
 document.getElementById('btn-see-more').addEventListener('click', function () {
     loadData()
