@@ -3,11 +3,11 @@ const loadData = async (id) =>{
     const res = await fetch(url);
     const data = await res.json();
     displayData(data.data.tools, id)
-    // console.log(data.data.tools[0])
-    // console.log(data.data.tools[0].name)
-    // console.log(data.data.tools[0].image)
-    // console.log(data.data.tools[0].features[0])
-    // console.log(data.data.tools[0].published_in)
+    // console.log(data)
+    // console.log(data.data.tools[0].description)
+    // console.log(data.data.tools[0].pricing)
+    // console.log(data.data.tools[0].pricing[0].price)
+    
 
 
 }
@@ -47,9 +47,9 @@ const displayData = (data, dataLimit) =>{
     
             </div>
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9 h-9 bg-rose-50 p-2 rounded-full text-red-500">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-              </svg>
+            <button onclick="loadAIHubDetails('${aiHub.id}')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9 h-9 bg-rose-50 p-2 rounded-full text-red-500">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+          </svg></button>
               
         </div>
     </div>`
@@ -60,7 +60,23 @@ const displayData = (data, dataLimit) =>{
     });
 
 }
-loadData(1)
+const loadAIHubDetails = async (hubId) =>{
+    const url = `https://openapi.programming-hero.com/api/ai/tool/${hubId}`
+    const res = await fetch(url)
+    const data = await res.json();
+    console.log(data.data.description)
+    console.log(data.data.pricing[0].plan)
+    console.log(data.data.pricing[0].price)
+    console.log(data.data.features['1'].feature_name)
+    console.log(data.data.integrations[0])
+    console.log(data.data.image_link[0])
+    console.log(data.data.input_output_examples[0].input)
+    console.log(data.data.input_output_examples[0].output)
+    console.log(data.data.accuracy.score)
+  
+    // displayPhoneDetail(data.data)
+}
+loadData(6)
 document.getElementById('btn-see-more').addEventListener('click',function(){
 loadData()
 
