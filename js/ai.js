@@ -2,7 +2,7 @@ const loadData = async (id) => {
     const url = `https://openapi.programming-hero.com/api/ai/tools`;
     const res = await fetch(url);
     const data = await res.json();
-    displayData(data.data.tools, id)
+    displayData(data.data.tools, id);
     // console.log(data)
     // console.log(data.data.tools[0].description)
     // console.log(data.data.tools[0].pricing)
@@ -12,19 +12,19 @@ const loadData = async (id) => {
 
 }
 const displayData = (data, dataLimit) => {
-    const aiHubContainer = document.getElementById('aiHub-container')
-    aiHubContainer.innerText = ''
-    const seeMore = document.getElementById('btn-see-more')
+    const aiHubContainer = document.getElementById('aiHub-container');
+    aiHubContainer.innerText = '';
+    const seeMore = document.getElementById('btn-see-more');
     if (dataLimit && data.length > 6) {
         data = data.slice(0, 6);
-        seeMore.classList.remove('hidden')
+        seeMore.classList.remove('hidden');
     }
     else {
-        seeMore.classList.add('hidden')
+        seeMore.classList.add('hidden');
     }
     data.forEach(aiHub => {
-        const aiHubDiv = document.createElement('div')
-        const features = aiHub.features
+        const aiHubDiv = document.createElement('div');
+        const features = aiHub.features;
         aiHubDiv.innerHTML = `
         <div class=" p-5 rounded border-2 rounded-xl max-sm:mb-5">
         <img class="rounded-xl w-full h-48" src="${aiHub.image}" alt="">
@@ -52,9 +52,9 @@ const displayData = (data, dataLimit) => {
           </svg></button>
               
         </div>
-    </div>`
+    </div>`;
 
-        aiHubContainer.appendChild(aiHubDiv)
+        aiHubContainer.appendChild(aiHubDiv);
 
 
     });
@@ -62,10 +62,10 @@ const displayData = (data, dataLimit) => {
 }
 const loadAIHubDetails = async (hubId) => {
     console.log(hubId)
-    const url = `https://openapi.programming-hero.com/api/ai/tool/${hubId}`
-    const res = await fetch(url)
+    const url = `https://openapi.programming-hero.com/api/ai/tool/${hubId}`;
+    const res = await fetch(url);
     const data = await res.json();
-    console.log(data.data.description)
+    // console.log(data.data.description)
     // console.log(data.data.pricing)
     // console.log(data.data.pricing[0].plan)
     // console.log(data.data.pricing[0].price)
@@ -75,13 +75,13 @@ const loadAIHubDetails = async (hubId) => {
     // console.log(data.data.input_output_examples[0].input)
     // console.log(data.data.input_output_examples[0].output)
     // console.log(data.data.accuracy.score)
-    displayAIHubDetail(data.data)
+    displayAIHubDetail(data.data);
 }
 const displayAIHubDetail = (hubDetails) => {
     // modal
     const hubDescription = document.getElementById('description');
     hubDescription.innerText = hubDetails.description;
-    const priceContainer = document.getElementById('price-container')
+    const priceContainer = document.getElementById('price-container');
     priceContainer.innerHTML=`
     <div class="text-green-500 text-xl font-bold rounded-xl bg-white p-3 py-5">
         <p>${hubDetails.pricing ? hubDetails.pricing[0].price : 'No Cost'}</p>
@@ -97,7 +97,7 @@ const displayAIHubDetail = (hubDetails) => {
     <p>${hubDetails.pricing ? hubDetails.pricing[2].plan : 'Free'}</p>
     </div>`;
     const hubFeatures = hubDetails.features;
-    const listOfHubFeatures = document.getElementById('hub-feature-list')
+    const listOfHubFeatures = document.getElementById('hub-feature-list');
     if(hubFeatures){
         const hubFeaturesKeys = Object.keys(hubFeatures)
         listOfHubFeatures.innerHTML=`
@@ -113,7 +113,6 @@ const displayAIHubDetail = (hubDetails) => {
 
     }
     const hubIntegrations = hubDetails.integrations;
-    console.log(hubIntegrations)
     const listOfHubIntegrations = document.getElementById('hub-integration-list')
 
     if(hubIntegrations){
@@ -130,7 +129,17 @@ const displayAIHubDetail = (hubDetails) => {
 
     }
     
-    
+    const modalImage = document.getElementById('modal-image');
+    modalImage.src = hubDetails.image_link[0];
+    const hubAccuracy = document.getElementById('accuracy');
+    const accuracyContainer = document.getElementById('accuracy-container')
+    if(hubDetails.accuracy.score){
+        hubAccuracy.innerText = hubDetails.accuracy.score * 100;
+        accuracyContainer.classList.remove('hidden')
+    }
+    else{
+        accuracyContainer.classList.add('hidden')
+    }
 
 
 }
