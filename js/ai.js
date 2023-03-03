@@ -77,6 +77,19 @@ const loadAIHubDetails = async (hubId) => {
 }
 const displayAIHubDetail = (hubDetails) => {
     // modal
+    const hubDescription = document.getElementById('description');
+    hubDescription.innerText = hubDetails.description;
+    const priceContainer = document.getElementById('price-container')
+    priceContainer.innerHTML=`
+    <div class="text-green-500 text-xl font-bold rounded-xl bg-white p-3 py-5">
+        <p>$10/month Basic</p>
+    </div>
+    <div class="text-orange-500 text-xl font-bold rounded-xl bg-white p-3 py-5 max-sm:my-5">
+       <p>$50/month Pro</p>
+    </div>
+    <div class="text-rose-500 text-xl font-bold rounded-xl bg-white p-3 py-5">
+       <p>Contact us Enterprise</p>
+    </div>`;
 
 
 }
