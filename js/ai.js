@@ -135,11 +135,24 @@ const displayAIHubDetail = (hubDetails) => {
     const accuracyContainer = document.getElementById('accuracy-container')
     if(hubDetails.accuracy.score){
         hubAccuracy.innerText = hubDetails.accuracy.score * 100;
-        accuracyContainer.classList.remove('hidden')
+        accuracyContainer.classList.remove('hidden');
     }
     else{
-        accuracyContainer.classList.add('hidden')
+        accuracyContainer.classList.add('hidden');
     }
+    const inOutContainer = document.getElementById('input-output-example');
+    const inputOutput =  hubDetails.input_output_examples;
+    
+    
+    if(hubDetails.input_output_examples){
+        inOutContainer.innerHTML=`${inputOutput.reduce((updated, latest) => updated.concat(`<p class="my-1 leading-7"><span class="font-bold text-2xl">${latest.input}</span><br><span class="text-gray-500">${latest.output}</span> </p>`), '')}`;
+    }
+    else{
+        inOutContainer.innerHTML=`
+        <p class="font-bold text-2xl my-5 leading-7">Can you give any example?</p>
+        <p class="text-gray-500 mb-8 leading-7">No! Not Yet! Take a break!!!</p>`;
+    }
+    // console.log(hubDetails.input_output_examples)
 
 
 }
