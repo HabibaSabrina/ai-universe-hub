@@ -127,7 +127,7 @@ const displayAIHubDetail = (hubDetails) => {
     const priceContainer = document.getElementById('price-container');
     priceContainer.innerHTML=`
     <div class="text-green-500 text-xl font-bold rounded-xl bg-white p-3 py-5">
-        <p>${hubDetails.pricing ? hubDetails.pricing[0].price : 'Free of Cost/'}</p>
+        <p>${hubDetails.pricing ? (hubDetails.pricing[0].price==0 ? 'Free of Cost/' : hubDetails.pricing[0].price) : 'Free of Cost/'}</p>
         <p>${hubDetails.pricing ? hubDetails.pricing[0].plan : 'Basic'}</p>
         
     </div>
