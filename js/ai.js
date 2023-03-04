@@ -1,3 +1,18 @@
+// function to sort data by data
+const sortingDate = (first, second) => {
+    const firstDate = new Date(first.published_in)
+    const secondDate = new Date(second.published_in)
+    if (firstDate > secondDate) {
+        return 1;
+    }
+    else if (firstDate < secondDate) {
+        return -1;
+    }
+    else {
+        return 0;
+    }
+}
+
 const loadData = async (id) => {
     loadSpinner(true); //start spinner
     const url = `https://openapi.programming-hero.com/api/ai/tools`;
@@ -7,13 +22,50 @@ const loadData = async (id) => {
 
 
 }
+
+let limit =0;
+let sortClicked =0;
+// function to load sorted array
+const sortLoadData = async (id) => {
+    const url = `https://openapi.programming-hero.com/api/ai/tools`;
+    const res = await fetch(url);
+    const data = await res.json();
+    let sortData = data.data.tools
+    if(id){
+        sortData = sortData.slice(0, 6);
+        sortData = sortData.sort(sortingDate);
+        displayData(sortData,6)   
+    }
+    else if(sortClicked===2){
+        sortDataFirstPart = sortData.slice(0, 6)
+        sortDataFirstPart = sortDataFirstPart.sort(sortingDate);
+        Array.prototype.splice.apply(sortData, [0, sortDataFirstPart.length].concat(sortDataFirstPart));
+        displayData(sortData);
+    }
+    else{
+        sortData = sortData.sort(sortingDate);
+        displayData(sortData)
+    }
+
+}
+document.getElementById('sort-data').addEventListener('click',function(){
+    sortClicked =1;
+    sortLoadData(limit);
+
+})
+
+// function for displaying data
 const displayData = (data, dataLimit) => {
     const aiHubContainer = document.getElementById('aiHub-container');
     aiHubContainer.innerText = '';
     const seeMore = document.getElementById('btn-see-more');
     if (dataLimit && data.length > 6) {
+        limit = 6;
         data = data.slice(0, 6);
         seeMore.classList.remove('hidden');
+    }
+    else if(dataLimit){
+        seeMore.classList.remove('hidden')
     }
     else {
         seeMore.classList.add('hidden');
@@ -152,6 +204,14 @@ const loadSpinner = isLoading => {
 
 loadData(6)
 document.getElementById('btn-see-more').addEventListener('click', function () {
-    loadData()
+    limit=0;
+    if(sortClicked === 1){
+        sortClicked=2;
+        sortLoadData();
+
+    }
+    else{
+        loadData();
+    }
 
 })
