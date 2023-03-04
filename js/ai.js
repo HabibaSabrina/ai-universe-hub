@@ -1,4 +1,4 @@
-// function to sort data by data
+// function to sort data by date in ascending order
 const sortingDate = (first, second) => {
     const firstDate = new Date(first.published_in)
     const secondDate = new Date(second.published_in)
