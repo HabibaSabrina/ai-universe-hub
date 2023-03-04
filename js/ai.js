@@ -13,6 +13,7 @@ const sortingDate = (first, second) => {
     }
 }
 
+// load data function
 const loadData = async (id) => {
     loadSpinner(true); //start spinner
     const url = `https://openapi.programming-hero.com/api/ai/tools`;
@@ -27,6 +28,7 @@ let limit =0;
 let sortClicked =0;
 // function to load sorted array
 const sortLoadData = async (id) => {
+    loadSpinner(true);
     const url = `https://openapi.programming-hero.com/api/ai/tools`;
     const res = await fetch(url);
     const data = await res.json();
@@ -109,12 +111,16 @@ const displayData = (data, dataLimit) => {
     loadSpinner(false); //spinner stop
 
 }
+// function to load modal data
 const loadAIHubDetails = async (hubId) => {
+    loadSpinner(true);
     const url = `https://openapi.programming-hero.com/api/ai/tool/${hubId}`;
     const res = await fetch(url);
     const data = await res.json();
     displayAIHubDetail(data.data);
 }
+
+//function to display modal data
 const displayAIHubDetail = (hubDetails) => {
     const hubDescription = document.getElementById('description');
     hubDescription.innerText = hubDetails.description;
@@ -189,6 +195,7 @@ const displayAIHubDetail = (hubDetails) => {
         <p class="font-bold text-2xl my-5 leading-7">Can you give any example?</p>
         <p class="text-gray-500 mb-20 leading-7">No! Not Yet! Take a break!!!</p>`;
     }
+    loadSpinner(false);
 
 }
 // spinner function
@@ -203,6 +210,8 @@ const loadSpinner = isLoading => {
 }
 
 loadData(6)
+
+// even listener for the see more button
 document.getElementById('btn-see-more').addEventListener('click', function () {
     limit=0;
     if(sortClicked === 1){
